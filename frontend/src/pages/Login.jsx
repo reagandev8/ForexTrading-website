@@ -27,8 +27,8 @@ const Login = () => {
         try {
             const endpoint = isLogin ? '/api/users/login' : '/api/users/register';
             const data = isLogin ? { email, password } : { name, email, password };
-            const res = await axios.post(`http://localhost:5000${endpoint}`, data);
-            
+            const res = await axios.post(`https://forextrading-backend.onrender.com${endpoint}`, data);
+
             setUserInfo(res.data);
             localStorage.setItem('userInfo', JSON.stringify(res.data));
             toast.success(isLogin ? 'Login successful' : 'Registration successful');
@@ -56,16 +56,16 @@ const Login = () => {
                 <form className="mt-8 space-y-6" onSubmit={submitHandler}>
                     <div className="rounded-md shadow-sm space-y-4">
                         {!isLogin && (
-                             <div>
-                             <input
-                                 type="text"
-                                 required
-                                 value={name}
-                                 onChange={(e) => setName(e.target.value)}
-                                 className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-trading-dark text-white rounded-md focus:outline-none focus:ring-trading-blue focus:border-trading-blue sm:text-sm"
-                                 placeholder="Full Name"
-                             />
-                         </div>
+                            <div>
+                                <input
+                                    type="text"
+                                    required
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-trading-dark text-white rounded-md focus:outline-none focus:ring-trading-blue focus:border-trading-blue sm:text-sm"
+                                    placeholder="Full Name"
+                                />
+                            </div>
                         )}
                         <div>
                             <input

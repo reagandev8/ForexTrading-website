@@ -18,7 +18,9 @@ connectDB();
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: "https://forex-trading-website-one.vercel.app/"
+}));
 app.use(express.json());
 
 // Routes
