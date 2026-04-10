@@ -14,7 +14,7 @@ const Pdfs = () => {
     useEffect(() => {
         const fetchPdfs = async () => {
             try {
-                const { data } = await axios.get('http://localhost:5000/api/products');
+                const { data } = await axios.get('https://forextrading-backend.onrender.com/api/products');
                 const pdfProducts = data.filter(item => item.type === 'pdf');
                 setPdfs(pdfProducts);
             } catch (error) {
