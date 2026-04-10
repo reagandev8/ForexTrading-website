@@ -18,16 +18,16 @@ const Footer = () => {
                             Empowering technical traders globally. Join the movement and master the markets with professional education and consistent signals.
                         </p>
                         <div className="flex items-center gap-4">
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-trading-blue hover:text-white hover:border-trading-blue transition-all">
+                            <a href="https://t.me/Frank_fx_signals" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-trading-blue hover:text-white hover:border-trading-blue transition-all">
                                 <FaTelegram className="text-xl" />
                             </a>
                             <a href="https://www.youtube.com/@frank.fx.trading" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-trading-blue hover:text-white hover:border-trading-blue transition-all">
                                 <FaYoutube className="text-xl" />
                             </a>
-                            <a href="https://www.facebook.com" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-trading-blue hover:text-white hover:border-trading-blue transition-all">
+                            <a href="https://www.facebook.com/official.frankfxtrading" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-trading-blue hover:text-white hover:border-trading-blue transition-all">
                                 <FaFacebook className="text-xl" />
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-trading-green hover:text-white hover:border-trading-green transition-all">
+                            <a href="https://www.instagram.com/official.frankfxtrading" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-trading-green hover:text-white hover:border-trading-green transition-all">
                                 <FaInstagram className="text-xl" />
                             </a>
                         </div>
