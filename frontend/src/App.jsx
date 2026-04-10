@@ -7,6 +7,7 @@ import Courses from './pages/Courses';
 import Pdfs from './pages/Pdfs';
 import Vip from './pages/Vip';
 import AdminDashboard from './pages/AdminDashboard';
+import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -26,6 +27,7 @@ function App() {
             <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </main>
+        <Footer />
         <ToastContainer theme="dark" position="top-center" />
       </div>
     </Router>
