@@ -18,37 +18,24 @@ connectDB();
 const app = express();
 
 // Middlewares
-const allowedOrigins = process.env.CLIENT_URL
-  ? process.env.CLIENT_URL.split(',').map(o => o.trim())
-  : [];
-
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (Postman, mobile apps, etc.)
-    if (!origin) return callback(null, true);
+    console.log("Origin:", origin);
 
-    // Allow localhost in development
-    if (
-      origin.startsWith('http://localhost') ||
-      origin.startsWith('http://127.0.0.1')
-    ) {
+    // allow all localhost during dev
+    if (!origin || origin.includes("localhost") || origin.includes("127.0.0.1")) {
       return callback(null, true);
     }
 
-    // Allow whitelisted production domains
-    if (allowedOrigins.includes(origin)) {
+    // allow your production frontend
+    if (origin === "https://forex-trading-website-one.vercel.app") {
       return callback(null, true);
     }
 
-    console.log('❌ CORS blocked:', origin);
-    return callback(null, false); // don't throw error
+    console.log("❌ Blocked:", origin);
+    return callback(null, true); // TEMP: allow to debug
   },
-
-  credentials: true,
-
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-
-  allowedHeaders: ['Content-Type', 'Authorization']
+  credentials: true
 }));
 app.use(express.json());
 
