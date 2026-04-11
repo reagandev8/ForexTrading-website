@@ -14,7 +14,7 @@ const Courses = () => {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const { data } = await axios.get('http://localhost:5000/api/products');
+                const { data } = await axios.get('https://forextrading-backend.onrender.com/api/products');
                 const courseProducts = data.filter(item => item.type === 'course');
                 setCourses(courseProducts);
             } catch (error) {

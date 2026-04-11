@@ -36,7 +36,7 @@ const Pdfs = () => {
         try {
             const priceVal = parseFloat(pdf.price);
             const { data } = await axios.post(
-                'http://localhost:5000/api/payments/create-checkout-session',
+                'https://forextrading-backend-onrender.com/api/payments/create-checkout-session',
                 {
                     orderItems: [{ name: pdf.title, price: priceVal, qty: 1, product: pdf._id }]
                 },
