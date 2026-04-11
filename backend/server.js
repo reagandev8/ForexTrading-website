@@ -2,7 +2,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.js';
-
 import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
@@ -30,6 +29,7 @@ app.use(cors({
   },
   credentials: true
 }));
+app.options('*', cors());
 app.use(express.json());
 
 // Routes
