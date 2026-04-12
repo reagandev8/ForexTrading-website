@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
+import { API_URL } from '../config';
 
 const Login = () => {
     const [name, setName] = useState('');
@@ -27,7 +28,7 @@ const Login = () => {
         try {
             const endpoint = isLogin ? '/api/users/login' : '/api/users/register';
             const data = isLogin ? { email, password } : { name, email, password };
-            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}${endpoint}`, data);
+            const res = await axios.post(`${API_URL}${endpoint}`, data);
 
             setUserInfo(res.data);
             localStorage.setItem('userInfo', JSON.stringify(res.data));

@@ -3,6 +3,7 @@ import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { API_URL } from '../config';
 
 const Vip = () => {
     const { userInfo } = useContext(UserContext);
@@ -17,7 +18,7 @@ const Vip = () => {
 
         try {
             const { data } = await axios.post(
-                'http://localhost:5000/api/payments/create-checkout-session',
+                `${API_URL}/api/payments/create-checkout-session`,
                 {
                     orderItems: [{ name: 'VIP Monthly Pass', price: 70, qty: 1 }]
                 },

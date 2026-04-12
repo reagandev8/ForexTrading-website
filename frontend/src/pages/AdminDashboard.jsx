@@ -3,6 +3,7 @@ import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { API_URL } from '../config';
 
 const AdminDashboard = () => {
     const { userInfo } = useContext(UserContext);
@@ -34,13 +35,13 @@ const AdminDashboard = () => {
                 },
             };
             if (activeTab === 'users') {
-                const { data } = await axios.get('http://localhost:5000/api/users', config);
+                const { data } = await axios.get(`${API_URL}/api/users`, config);
                 setUsers(data);
             } else if (activeTab === 'products') {
-                const { data } = await axios.get('http://localhost:5000/api/products');
+                const { data } = await axios.get(`${API_URL}/api/products`);
                 setProducts(data);
             } else if (activeTab === 'orders') {
-                const { data } = await axios.get('http://localhost:5000/api/orders', config);
+                const { data } = await axios.get(`${API_URL}/api/orders`, config);
                 setOrders(data);
             }
         } catch (error) {
@@ -54,7 +55,7 @@ const AdminDashboard = () => {
         if (window.confirm('Are you sure you want to delete this user?')) {
             try {
                 const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-                await axios.delete(`http://localhost:5000/api/users/${id}`, config);
+                await axios.delete(`${API_URL}/api/users/${id}`, config);
                 toast.success('User deleted');
                 fetchData();
             } catch (error) {
@@ -67,7 +68,7 @@ const AdminDashboard = () => {
         if (window.confirm('Are you sure you want to delete this product?')) {
             try {
                 const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-                await axios.delete(`http://localhost:5000/api/products/${id}`, config);
+                await axios.delete(`${API_URL}/api/products/${id}`, config);
                 toast.success('Product deleted');
                 fetchData();
             } catch (error) {
@@ -80,7 +81,7 @@ const AdminDashboard = () => {
         if (window.confirm('Are you sure you want to delete this order?')) {
             try {
                 const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-                await axios.delete(`http://localhost:5000/api/orders/${id}`, config);
+                await axios.delete(`${API_URL}/api/orders/${id}`, config);
                 toast.success('Order deleted');
                 fetchData();
             } catch (error) {
@@ -92,7 +93,7 @@ const AdminDashboard = () => {
     const handleCreateProduct = async () => {
         try {
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-            await axios.post('http://localhost:5000/api/products', {}, config);
+            await axios.post(`${API_URL}/api/products`, {}, config);
             toast.success('Sample product created');
             fetchData();
         } catch (error) {
@@ -113,7 +114,7 @@ const AdminDashboard = () => {
     const submitProductEdit = async (id) => {
         try {
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-            await axios.put(`http://localhost:5000/api/products/${id}`, productForm, config);
+            await axios.put(`${API_URL}/api/products/${id}`, productForm, config);
             toast.success('Product updated');
             setEditingProduct(null);
             fetchData();

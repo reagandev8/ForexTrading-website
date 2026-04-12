@@ -4,6 +4,7 @@ import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { API_URL } from '../config';
 
 const Pdfs = () => {
     const { userInfo } = useContext(UserContext);
@@ -14,7 +15,7 @@ const Pdfs = () => {
     useEffect(() => {
         const fetchPdfs = async () => {
             try {
-                const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`);
+                const { data } = await axios.get(`${API_URL}/api/products`);
                 const pdfProducts = data.filter(item => item.type === 'pdf');
                 setPdfs(pdfProducts);
             } catch (error) {
@@ -36,7 +37,7 @@ const Pdfs = () => {
         try {
             const priceVal = parseFloat(pdf.price);
             const { data } = await axios.post(
-                'https://forextrading-backend-onrender.com/api/payments/create-checkout-session',
+                `${API_URL}/api/payments/create-checkout-session`,
                 {
                     orderItems: [{ name: pdf.title, price: priceVal, qty: 1, product: pdf._id }]
                 },

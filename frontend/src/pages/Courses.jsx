@@ -4,6 +4,7 @@ import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { API_URL } from '../config';
 
 const Courses = () => {
     const { userInfo } = useContext(UserContext);
@@ -14,7 +15,7 @@ const Courses = () => {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`);
+                const { data } = await axios.get(`${API_URL}/api/products`);
                 const courseProducts = data.filter(item => item.type === 'course');
                 setCourses(courseProducts);
             } catch (error) {
@@ -36,7 +37,7 @@ const Courses = () => {
         try {
             const priceVal = parseFloat(course.price);
             const { data } = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/api/payments/create-checkout-session`,
+                `${API_URL}/api/payments/create-checkout-session`,
                 {
                     orderItems: [{ name: course.title, price: priceVal, qty: 1 }]
                 },
