@@ -19,23 +19,7 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-  origin: (origin, callback) => {
-    console.log("Origin:", origin);
-
-    // allow all localhost during dev
-    if (!origin || origin.includes("localhost") || origin.includes("127.0.0.1")) {
-      return callback(null, true);
-    }
-
-    // allow your production frontend
-    if (origin === "https://forex-trading-website-one.vercel.app") {
-      return callback(null, true);
-    }
-
-    console.log("❌ Blocked:", origin);
-    return callback(null, true); // TEMP: allow to debug
-  },
-  credentials: true
+  origin: 'https://forex-trading-website-one.vercel.app'
 }));
 app.use(express.json());
 
