@@ -27,7 +27,7 @@ const Login = () => {
         try {
             const endpoint = isLogin ? '/api/users/login' : '/api/users/register';
             const data = isLogin ? { email, password } : { name, email, password };
-            const res = await axios.post(`https://forextrading-backend.onrender.com${endpoint}`, data);
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}${endpoint}`, data);
 
             setUserInfo(res.data);
             localStorage.setItem('userInfo', JSON.stringify(res.data));
