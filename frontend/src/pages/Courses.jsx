@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { API_URL } from '../config';
+import PayPalButton from '../components/PayPalButton';
 
 const Courses = () => {
     const { userInfo } = useContext(UserContext);
@@ -27,33 +28,7 @@ const Courses = () => {
         fetchCourses();
     }, []);
 
-    const handleBuy = async (course) => {
-        if (!userInfo) {
-            toast.info('Please log in to enroll in courses');
-            navigate('/login');
-            return;
-        }
-
-        try {
-            const priceVal = parseFloat(course.price);
-            const { data } = await axios.post(
-                `${API_URL}/api/payments/create-checkout-session`,
-                {
-                    orderItems: [{ name: course.title, price: priceVal, qty: 1 }]
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${userInfo.token}`
-                    }
-                }
-            );
-            if (data.url) {
-                window.location.href = data.url;
-            }
-        } catch (error) {
-            toast.error('Failed to initiate checkout');
-        }
-    };
+    // Payment is handled via PayPalButton component
     if (loading) return <div className="text-center text-white py-20 text-2xl font-bold animate-pulse">Loading courses...</div>;
 
     return (
@@ -82,12 +57,17 @@ const Courses = () => {
                                 </div>
                                 <div className="p-6">
                                     <h2 className="text-2xl font-bold mb-2">{course.title}</h2>
-                                    <div className="flex justify-between items-center mt-6">
-                                        <span className="text-2xl font-bold text-trading-green">${course.price}</span>
-                                        <button onClick={() => handleBuy(course)} className="bg-white text-black px-4 py-2 rounded font-bold hover:bg-gray-200 transition-colors">
-                                            Enroll
-                                        </button>
-                                    </div>
+                                        <div className="flex flex-col mt-6">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-2xl font-bold text-trading-green">${course.price}</span>
+                                                {!userInfo && (
+                                                    <button onClick={() => { toast.info('Please log in to enroll'); navigate('/login'); }} className="bg-white text-black px-4 py-2 rounded font-bold hover:bg-gray-200 transition-colors">
+                                                        Login to Enroll
+                                                    </button>
+                                                )}
+                                            </div>
+                                            {userInfo && <PayPalButton product={course} />}
+                                        </div>
                                 </div>
                             </motion.div>
                         );

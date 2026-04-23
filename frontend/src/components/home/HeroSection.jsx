@@ -4,7 +4,7 @@ import { FaArrowRight, FaBookOpen } from 'react-icons/fa6';
 
 const HeroSection = () => {
     return (
-        <section className="relative overflow-hidden min-h-[90vh] flex items-center justify-center pt-20">
+        <section className="relative overflow-hidden min-h-[75vh] flex items-center justify-center pt-16">
             {/* Background decoration */}
             <div className="absolute top-20 -left-10 w-96 h-96 bg-trading-blue rounded-full mix-blend-multiply filter blur-[128px] opacity-40 animate-pulse"></div>
             <div className="absolute top-40 -right-10 w-96 h-96 bg-trading-green rounded-full mix-blend-multiply filter blur-[128px] opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>

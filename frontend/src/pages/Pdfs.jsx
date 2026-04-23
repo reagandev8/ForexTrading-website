@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { API_URL } from '../config';
+import PayPalButton from '../components/PayPalButton';
 
 const Pdfs = () => {
     const { userInfo } = useContext(UserContext);
@@ -27,33 +28,7 @@ const Pdfs = () => {
         fetchPdfs();
     }, []);
 
-    const handleBuy = async (pdfTitle) => {
-        if (!userInfo) {
-            toast.info('Please log in to buy PDFs');
-            navigate('/login');
-            return;
-        }
-
-        try {
-            const priceVal = parseFloat(pdf.price);
-            const { data } = await axios.post(
-                `${API_URL}/api/payments/create-checkout-session`,
-                {
-                    orderItems: [{ name: pdf.title, price: priceVal, qty: 1, product: pdf._id }]
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${userInfo.token}`
-                    }
-                }
-            );
-            if (data.url) {
-                window.location.href = data.url;
-            }
-        } catch (error) {
-            toast.error('Failed to initiate checkout');
-        }
-    };
+    // Payment via PayPalButton
 
     if (loading) return <div className="text-center text-white py-20 text-2xl font-bold animate-pulse">Loading PDFs...</div>;
 
@@ -76,9 +51,15 @@ const Pdfs = () => {
                             </div>
                             <h3 className="text-xl font-bold mb-2">{pdf.title}</h3>
                             <p className="text-trading-green font-bold text-lg mt-auto">${pdf.price}</p>
-                            <button onClick={() => handleBuy(pdf)} className="mt-4 w-full bg-trading-blue hover:bg-blue-600 text-white font-bold py-2 rounded transition-colors shadow-lg">
-                                Buy Now
-                            </button>
+                            {!userInfo ? (
+                                <button onClick={() => { toast.info('Please log in to buy PDFs'); navigate('/login'); }} className="mt-4 w-full bg-trading-blue hover:bg-blue-600 text-white font-bold py-2 rounded transition-colors shadow-lg">
+                                    Login to Buy
+                                </button>
+                            ) : (
+                                <div className="w-full mt-2">
+                                    <PayPalButton product={pdf} />
+                                </div>
+                            )}
                         </motion.div>
                     ))}
                 </div>

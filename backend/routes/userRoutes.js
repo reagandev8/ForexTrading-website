@@ -64,7 +64,7 @@ router.post('/login', async (req, res) => {
 // @access  Private
 router.get('/profile', protect, async (req, res) => {
     try {
-        const user = await User.findById(req.user._id);
+        const user = await User.findById(req.user._id).populate('purchasedPDFs').populate('purchasedCourses');
         if (user) {
             res.json({
                 _id: user._id,

@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -10,6 +11,9 @@ const Login = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
     const [loading, setLoading] = useState(false);
 
@@ -24,6 +28,12 @@ const Login = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+
+        if (!isLogin && password !== confirmPassword) {
+            toast.error('Passwords do not match');
+            return;
+        }
+
         setLoading(true);
         try {
             const endpoint = isLogin ? '/api/users/login' : '/api/users/register';
@@ -78,16 +88,42 @@ const Login = () => {
                                 placeholder="Email address"
                             />
                         </div>
-                        <div>
+                        <div className="relative">
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-trading-dark text-white rounded-md focus:outline-none focus:ring-trading-blue focus:border-trading-blue sm:text-sm"
+                                className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-trading-dark text-white rounded-md focus:outline-none focus:ring-trading-blue focus:border-trading-blue sm:text-sm pr-10"
                                 placeholder="Password"
                             />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
                         </div>
+                        {!isLogin && (
+                            <div className="relative">
+                                <input
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    required
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-trading-dark text-white rounded-md focus:outline-none focus:ring-trading-blue focus:border-trading-blue sm:text-sm pr-10"
+                                    placeholder="Confirm Password"
+                                />
+                                <button
+                                    type="button"
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                >
+                                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                                </button>
+                            </div>
+                        )}
                     </div>
 
                     <div>
