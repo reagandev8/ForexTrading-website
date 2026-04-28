@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
+import logo from '../assets/logo.png';
 
 const Navbar = () => {
     const { userInfo, logout } = useContext(UserContext);
@@ -22,26 +23,27 @@ const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     <div className="flex-shrink-0">
-                        <Link to="/" onClick={() => setIsOpen(false)} className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-trading-green to-trading-blue">
-                            FrankFxTrading
+                        <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+                            <img src={logo} alt="Frank FX Trading Logo" className="h-10 w-auto object-contain" />
+                            <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-trading-green to-trading-blue hidden sm:inline">FrankFxTrading</span>
                         </Link>
                     </div>
-                    
+
                     {/* Desktop Menu */}
                     <div className="hidden md:block">
                         <div className="ml-10 flex items-baseline space-x-6">
                             <Link to="/" className="text-trading-light hover:text-trading-green px-3 py-2 rounded-md transition-colors">Home</Link>
-                            <Link to="/courses" className="text-trading-light hover:text-trading-green px-3 py-2 rounded-md transition-colors">Courses</Link>
+                            {/* <Link to="/courses" className="text-trading-light hover:text-trading-green px-3 py-2 rounded-md transition-colors">Courses</Link> */}
                             <Link to="/pdfs" className="text-trading-light hover:text-trading-green px-3 py-2 rounded-md transition-colors">PDF Store</Link>
                             <Link to="/vip" className="text-trading-light hover:text-trading-green px-3 py-2 rounded-md transition-colors font-bold text-yellow-500">VIP</Link>
-                            
+
                             {userInfo ? (
                                 <>
                                     <Link to="/dashboard" className="text-trading-light hover:text-trading-green px-3 py-2 rounded-md transition-colors">Dashboard</Link>
                                     {userInfo.role === 'admin' && (
                                         <Link to="/admin" className="text-trading-light hover:text-trading-green px-3 py-2 rounded-md transition-colors text-purple-400 font-bold">Admin</Link>
                                     )}
-                                    <button 
+                                    <button
                                         onClick={handleLogout}
                                         className="bg-red-600/20 hover:bg-red-600/40 text-red-500 border border-red-500/50 px-4 py-2 rounded-md transition-colors"
                                     >
@@ -53,7 +55,7 @@ const Navbar = () => {
                             )}
                         </div>
                     </div>
-                    
+
                     {/* Mobile menu button */}
                     <div className="md:hidden flex items-center">
                         <button
@@ -82,14 +84,14 @@ const Navbar = () => {
                     <Link to="/courses" onClick={() => setIsOpen(false)} className="text-trading-light hover:text-trading-green hover:bg-white/5 block px-3 py-2 rounded-md text-base font-medium transition-colors">Courses</Link>
                     <Link to="/pdfs" onClick={() => setIsOpen(false)} className="text-trading-light hover:text-trading-green hover:bg-white/5 block px-3 py-2 rounded-md text-base font-medium transition-colors">PDF Store</Link>
                     <Link to="/vip" onClick={() => setIsOpen(false)} className="text-yellow-500 hover:text-yellow-400 hover:bg-white/5 block px-3 py-2 rounded-md text-base font-bold transition-colors">VIP</Link>
-                    
+
                     {userInfo ? (
                         <>
                             <Link to="/dashboard" onClick={() => setIsOpen(false)} className="text-trading-light hover:text-trading-green hover:bg-white/5 block px-3 py-2 rounded-md text-base font-medium transition-colors">Dashboard</Link>
                             {userInfo.role === 'admin' && (
                                 <Link to="/admin" onClick={() => setIsOpen(false)} className="text-purple-400 hover:text-purple-300 hover:bg-white/5 block px-3 py-2 rounded-md text-base font-bold transition-colors">Admin</Link>
                             )}
-                            <button 
+                            <button
                                 onClick={handleLogout}
                                 className="w-full text-center bg-red-600/20 hover:bg-red-600/40 text-red-500 border border-red-500/50 block px-3 py-2 rounded-md text-base font-medium mt-4 transition-colors"
                             >

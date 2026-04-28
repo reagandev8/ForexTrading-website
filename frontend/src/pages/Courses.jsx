@@ -1,79 +1,110 @@
-import { motion } from 'framer-motion';
-import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../context/UserContext';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { API_URL } from '../config';
-import PayPalButton from '../components/PayPalButton';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaChevronDown, FaCirclePlay, FaChevronRight } from 'react-icons/fa6';
+import { levels } from './coursesData';
 
 const Courses = () => {
-    const { userInfo } = useContext(UserContext);
-    const navigate = useNavigate();
-    const [courses, setCourses] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [activeLevel, setActiveLevel] = useState(null);
 
-    useEffect(() => {
-        const fetchCourses = async () => {
-            try {
-                const { data } = await axios.get(`${API_URL}/api/products`);
-                const courseProducts = data.filter(item => item.type === 'course');
-                setCourses(courseProducts);
-            } catch (error) {
-                toast.error('Failed to load courses');
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchCourses();
-    }, []);
-
-    // Payment is handled via PayPalButton component
-    if (loading) return <div className="text-center text-white py-20 text-2xl font-bold animate-pulse">Loading courses...</div>;
+    const toggleLevel = (id) => {
+        if (activeLevel === id) {
+            setActiveLevel(null);
+        } else {
+            setActiveLevel(id);
+        }
+    };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-12">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center mb-12">
-                <h1 className="text-4xl font-extrabold mb-4">Premium Trading Courses</h1>
-                <p className="text-gray-400">Step-by-step video lessons to master the forex market.</p>
-            </motion.div>
+        <div className="min-h-screen pt-24 pb-20 bg-[#0a0e17]">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            {courses.length === 0 ? (
-                <div className="text-center text-gray-500 py-10">No courses available at the moment.</div>
-            ) : (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {courses.map((course, idx) => {
-                        const bgGradient = idx % 3 === 0 ? 'from-blue-500 to-trading-blue' : idx % 3 === 1 ? 'from-green-500 to-trading-green' : 'from-purple-500 to-purple-800';
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center mb-16"
+                >
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-white">
+                        Trading <span className="text-transparent bg-clip-text bg-gradient-to-r from-trading-green to-trading-blue">Curriculum</span>
+                    </h1>
+                    <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                        Follow our structured learning path. From understanding the basics to mastering advanced Smart Money Concepts. Select a level below to explore the lessons.
+                    </p>
+                </motion.div>
+
+                <div className="space-y-6">
+                    {levels.map((level, idx) => {
+                        const isActive = activeLevel === level.id;
                         return (
                             <motion.div
-                                key={course._id}
+                                key={level.id}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: idx * 0.1 }}
-                                className={`rounded-2xl overflow-hidden glass hover:scale-105 transition-transform duration-300`}
+                                className={`rounded-2xl overflow-hidden border-2 transition-all duration-300 ${isActive ? level.activeBorder : level.border} bg-black/40 backdrop-blur-md`}
                             >
-                                <div className={`h-48 bg-gradient-to-br ${bgGradient} flex items-center justify-center`}>
-                                    <span className="text-white text-xl font-bold opacity-80 capitalize">{course.type}</span>
-                                </div>
-                                <div className="p-6">
-                                    <h2 className="text-2xl font-bold mb-2">{course.title}</h2>
-                                        <div className="flex flex-col mt-6">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <span className="text-2xl font-bold text-trading-green">${course.price}</span>
-                                                {!userInfo && (
-                                                    <button onClick={() => { toast.info('Please log in to enroll'); navigate('/login'); }} className="bg-white text-black px-4 py-2 rounded font-bold hover:bg-gray-200 transition-colors">
-                                                        Login to Enroll
-                                                    </button>
-                                                )}
-                                            </div>
-                                            {userInfo && <PayPalButton product={course} />}
+                                <button
+                                    onClick={() => toggleLevel(level.id)}
+                                    className={`w-full flex items-center justify-between p-6 md:p-8 bg-gradient-to-r ${level.bgGradient} hover:opacity-90 transition-opacity`}
+                                >
+                                    <div className="flex items-center gap-6 text-left">
+                                        <div className="w-16 h-16 rounded-xl bg-black/50 flex items-center justify-center border border-white/10 flex-shrink-0 shadow-xl">
+                                            {level.icon}
                                         </div>
-                                </div>
+                                        <div>
+                                            <h2 className="text-2xl font-bold text-white mb-2">{level.title}</h2>
+                                            <p className="text-gray-300 text-sm md:text-base">{level.description}</p>
+                                        </div>
+                                    </div>
+                                    <motion.div
+                                        animate={{ rotate: isActive ? 180 : 0 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="hidden sm:flex w-10 h-10 rounded-full bg-white/10 items-center justify-center flex-shrink-0 ml-4"
+                                    >
+                                        <FaChevronDown className="text-white" />
+                                    </motion.div>
+                                </button>
+
+                                <AnimatePresence>
+                                    {isActive && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className="p-6 md:p-8 bg-[#0d1117] border-t border-white/5 space-y-4">
+                                                <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                                                    <FaCirclePlay className="text-trading-green" />
+                                                    Curriculum Lessons:
+                                                </h3>
+                                                {level.lessons.map((lesson, lIdx) => (
+                                                    <Link
+                                                        key={lIdx}
+                                                        to={`/courses/${level.id}/${lIdx}`}
+                                                        className="group p-4 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer flex gap-4 items-center"
+                                                    >
+                                                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:border-trading-green transition-colors text-sm font-bold">
+                                                            {lIdx + 1}
+                                                        </div>
+                                                        <div className="flex-grow">
+                                                            <h4 className="text-white font-bold mb-1 group-hover:text-trading-green transition-colors">{lesson.title.split('. ')[1]}</h4>
+                                                            <p className="text-gray-400 text-sm">{lesson.desc}</p>
+                                                        </div>
+                                                        <FaChevronRight className="text-gray-600 group-hover:text-trading-green transition-colors flex-shrink-0" />
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </motion.div>
                         );
                     })}
                 </div>
-            )}
+
+            </div>
         </div>
     );
 };

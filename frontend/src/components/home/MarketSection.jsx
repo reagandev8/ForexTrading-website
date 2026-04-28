@@ -26,7 +26,7 @@ const MarketSection = () => {
                     <div className="mb-6 rounded-lg overflow-hidden border border-white/5 bg-[#131722]">
                         <iframe 
                             scrolling="no" 
-                            allowTransparency="true" 
+                            allowtransparency="true" 
                             frameBorder="0" 
                             src="https://www.tradingview-widget.com/embed-widget/tickers/?locale=en#%7B%22symbols%22%3A%5B%7B%22proName%22%3A%22FX%3AEURUSD%22%2C%22title%22%3A%22EUR%2FUSD%22%7D%2C%7B%22proName%22%3A%22FX%3AGBPUSD%22%2C%22title%22%3A%22GBP%2FUSD%22%7D%2C%7B%22proName%22%3A%22FX%3AUSDJPY%22%2C%22title%22%3A%22USD%2FJPY%22%7D%2C%7B%22proName%22%3A%22OANDA%3AXAUUSD%22%2C%22title%22%3A%22Gold%22%7D%2C%7B%22proName%22%3A%22FX_IDC%3AUSDZAR%22%2C%22title%22%3A%22USD%2FZAR%22%7D%5D%2C%22colorTheme%22%3A%22dark%22%2C%22isTransparent%22%3Atrue%2C%22showSymbolLogo%22%3Atrue%2C%22width%22%3A%22100%25%22%2C%22height%22%3A104%2C%22utm_source%22%3A%22localhost%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22tickers%22%2C%22page-uri%22%3A%22localhost%22%7D" 
                             style={{ boxSizing: "border-box", height: "104px", width: "100%" }}
@@ -41,7 +41,7 @@ const MarketSection = () => {
                             width="100%" 
                             height="100%" 
                             frameBorder="0" 
-                            allowTransparency="true" 
+                            allowtransparency="true" 
                             scrolling="no"
                             title="Interactive Chart"
                         ></iframe>

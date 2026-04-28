@@ -1,18 +1,8 @@
 import { motion } from 'framer-motion';
-import { FaShieldHalved, FaRocket, FaUsers, FaChartPie, FaMobileScreen, FaHeadset } from 'react-icons/fa6';
+import { FaUsers, FaChartPie, FaHeadset } from 'react-icons/fa6';
 
 const FeaturesSection = () => {
     const features = [
-        {
-            icon: <FaShieldHalved />,
-            title: "Proven Strategies",
-            description: "Learn market-tested strategies that have consistently generated returns for our professional trading team over the years."
-        },
-        {
-            icon: <FaRocket />,
-            title: "Beginner Friendly",
-            description: "No prior experience? No problem. Our simplified approach breaks down complex concepts into easy-to-digest lessons."
-        },
         {
             icon: <FaUsers />,
             title: "Community Support",
@@ -22,11 +12,6 @@ const FeaturesSection = () => {
             icon: <FaChartPie />,
             title: "Risk Management",
             description: "Master the most crucial aspect of trading. We'll teach you how to protect your capital and live to trade another day."
-        },
-        {
-            icon: <FaMobileScreen />,
-            title: "Trade Anywhere",
-            description: "All our resources and signals are fully optimized for mobile devices so you never miss a market opportunity."
         },
         {
             icon: <FaHeadset />,

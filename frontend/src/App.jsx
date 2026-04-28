@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Courses from './pages/Courses';
+import LessonDetail from './pages/LessonDetail';
 import Pdfs from './pages/Pdfs';
 import Vip from './pages/Vip';
 import AdminDashboard from './pages/AdminDashboard';
@@ -22,6 +23,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/courses" element={<Courses />} />
+            <Route path="/courses/:levelId/:lessonIndex" element={<LessonDetail />} />
             <Route path="/pdfs" element={<Pdfs />} />
             <Route path="/vip" element={<Vip />} />
             <Route path="/admin" element={<AdminDashboard />} />
